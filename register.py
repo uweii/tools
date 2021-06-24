@@ -1,4 +1,7 @@
-import json
+import time
+import uuid
+
+import simplejson
 import requests as requests
 
 
@@ -16,7 +19,6 @@ headers = {
 
 
 def register(email, name, password):
-    print(password)
     body = {
         'email': email,
         'name': name,
@@ -31,7 +33,7 @@ def login(email, password):
     body = {'email': email, 'passwd': password}
     res = requests.post(url=loginUrl, data=body,headers=headers)
     if res.status_code == 200:
-        getResult(res)
+        # getResult(res)
         return res
 
 
@@ -41,10 +43,10 @@ def getResult(res):
         cookies_dict = requests.utils.dict_from_cookiejar(res.cookies)
         # print(cookies_dict)
         link = requests.post(url=linkUrl,headers=headers, cookies=cookies_dict)
-        # print(link.text)
-        jres = json.loads(link.text)
-        preLink = jres['data']['link']
-        tab = jres['data']['tab']
+        print(link.text)
+        jre = simplejson.loads(link.text)
+        preLink = jre['data']['link']
+        tab = jre['data']['tab']
         ssr = '不存在'
         clash = '不存在'
         V2ray = '不存在'
@@ -83,14 +85,14 @@ def mainPid(email, name, password):
         print("登录失败")
 
 # 邮箱
-register_email = 'tty009'
+register_email = '{}'.format(time.time())
 # 用户名
 register_name = '1'
 # 密码
 register_password = '12345678'
 
 if __name__ == '__main__':
-    # mainPid(register_email, register_name, register_password)
-    login(register_email, register_password)
+    mainPid(register_email, register_name, register_password)
+    # login(register_email, register_password)
 
 
