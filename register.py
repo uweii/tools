@@ -1,8 +1,6 @@
+import json
 import time
-import uuid
-
-import simplejson
-import requests as requests
+import requests
 
 
 registUrl = 'https://j03.space/signup'
@@ -43,8 +41,8 @@ def getResult(res):
         cookies_dict = requests.utils.dict_from_cookiejar(res.cookies)
         # print(cookies_dict)
         link = requests.post(url=linkUrl,headers=headers, cookies=cookies_dict)
-        print(link.text)
-        jre = simplejson.loads(link.text)
+        # print(link.text)
+        jre = json.loads(link.text)
         preLink = jre['data']['link']
         tab = jre['data']['tab']
         ssr = '不存在'
@@ -93,6 +91,8 @@ register_password = '12345678'
 
 if __name__ == '__main__':
     mainPid(register_email, register_name, register_password)
+    print('复制链接后，按2次回车键推退出...')
+    input()
     # login(register_email, register_password)
 
 
